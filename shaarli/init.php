@@ -13,8 +13,7 @@ class Shaarli extends Plugin {
 
   function init($host) {
     $this->host = $host;
-    $this->dbh = $host->get_dbh();
-
+    
     $host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
     $host->add_hook($host::HOOK_PREFS_TAB, $this);
   }
@@ -77,7 +76,7 @@ class Shaarli extends Plugin {
   function getShaarli() {
     $id = db_escape_string($_REQUEST['id']);
 
-    $result = $this->dbh->query("SELECT title, link
+    $result = db_query("SELECT title, link
                       FROM ttrss_entries, ttrss_user_entries
                       WHERE id = '$id' AND ref_id = id AND owner_uid = " .$_SESSION['uid']);
 
